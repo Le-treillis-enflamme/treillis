@@ -24,6 +24,6 @@ public class Noeud {
     }//pbm avec id
     
     public String toString (){
-        return "coucou" ;
+        return "coucou233" ;
     }
 }
