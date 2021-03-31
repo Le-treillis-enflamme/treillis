@@ -23,5 +23,7 @@ public class Noeud {
         k=k+1;
     }//pbm avec id
     
-    public 
+    public String toString (){
+        return "coucou" ;
+    }
 }
