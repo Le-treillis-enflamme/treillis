@@ -24,6 +24,7 @@ public class Noeud {
     }//pbm avec id
     
     public String toString (){
+        // test modifs
         return "coucou233" ;
     }
 }
