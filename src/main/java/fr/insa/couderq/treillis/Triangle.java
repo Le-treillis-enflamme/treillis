@@ -12,5 +12,4 @@ package fr.insa.couderq.treillis;
 public class Triangle {
     
     private int id;
-    private 
 }
