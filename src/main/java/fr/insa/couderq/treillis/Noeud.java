@@ -9,22 +9,28 @@ package fr.insa.couderq.treillis;
  *
  * @author Administrateur
  */
-public class Noeud {
+public abstract class Noeud {
     
     private int id;
-    private double px;
-    private double py;
+//    private double px;
+//    private double py;
+//    
+//    public Noeud (double x, double y){
+//        int k=0;
+//        this.id = k;
+//        this.px = x;
+//        this.py = y;
+//        k=k+1;
+//    }//pbm avec id
+//    
+//    @Override
+//    public String toString (){
+//        String res ;
+//        res = this.id+"["+this.px+","this.py+"]" ;
+//        return res ;
+//    }
+//    
     
-    public Noeud (double x, double y){
-        int k=0;
-        this.id = k;
-        this.px = x;
-        this.py = y;
-        k=k+1;
-    }//pbm avec id
+    public abstract double calPx() ;
     
-    public String toString (){
-        // test modifs
-        return "coucou233" ;
-    }
 }
