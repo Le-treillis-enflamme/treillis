@@ -12,4 +12,14 @@ package fr.insa.couderq.treillis;
 public class Triangle {
     
     private int id;
+   
+    private Segment AB;
+    private Segment BC;
+    private Segment CA;
+    
+    public Triangle (Point A, Point B, Point C){
+        this.AB = new Segment(A,B);
+        this.BC = new Segment(B,C);
+        this.CA = new Segment(C,A);
+    }
 }
