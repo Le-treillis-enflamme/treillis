@@ -5,32 +5,28 @@
  */
 package fr.insa.couderq.treillis;
 
+
 /**
  *
  * @author Administrateur
  */
 public abstract class Noeud {
+
+private static int CUR_ID = 1;
+
+public static int nextID() {
+    int res = CUR_ID;
+    CUR_ID ++;
+    return res;
+}
     
     private int id;
-//    private double px;
-//    private double py;
-//    
-//    public Noeud (double x, double y){
-//        int k=0;
-//        this.id = k;
-//        this.px = x;
-//        this.py = y;
-//        k=k+1;
-//    }//pbm avec id
-//    
-//    @Override
-//    public String toString (){
-//        String res ;
-//        res = this.id+"["+this.px+","this.py+"]" ;
-//        return res ;
-//    }
-//    
     
-    public abstract double calPx() ;
+    public Noeud (){
+        this.id = 
+    }
+    
+    public abstract double calPx();
+    public abstract double calPy();
     
 }
