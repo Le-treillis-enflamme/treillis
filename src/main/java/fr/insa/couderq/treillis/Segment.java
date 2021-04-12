@@ -11,6 +11,21 @@ package fr.insa.couderq.treillis;
  */
 public class Segment {
     
-    // TODO
+    private Point dbt;
+    private Point fin;
+    
+    public Segment(Point A, Point B){
+        this.dbt = A;
+        this.fin = B;
+    }    
+
+    public Point getDbt() {
+        return dbt;
+    }
+
+    public Point getFin() {
+        return fin;
+    }
+    
     
 }
