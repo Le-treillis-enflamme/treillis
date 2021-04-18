@@ -15,11 +15,12 @@ public class Point {
     private double py;
     
     public Point(double x, double y){
-        //TODO if ((x<Treilli.getXmin())||(x>getXmax()))||(y<getYmin())||(y>getYmax())){
-        
-    }
+        //TODO 
+        if ((x< Treilli.getXmin())||(x>getXmax()))||(y<getYmin())||(y>getYmax())){
+            double xmin = Treilli.this.getXmin();
         this.px = x;
         this.py = y;
+        }
     }
 
     public double getPx() {
