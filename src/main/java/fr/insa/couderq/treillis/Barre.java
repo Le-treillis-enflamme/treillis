@@ -9,15 +9,38 @@ package fr.insa.couderq.treillis;
  *
  * @author Administrateur
  */
-public class Barre {
+public class Barre extends Figure{
  
     private int id;
     private Type type;
     private Noeud dbt;
     private Noeud fin;
     
-    public Barre(){
-        //this.id
-        
+    public Barre(Noeud dbt, Noeud fin, Type type){
+        this.id= Treilli.nextID();
+        this.dbt=dbt;
+        this.fin=fin;
+        this.type=type;
+        dbt.setBarres(this);
+        fin.setBarres(this);
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public Noeud getDbt() {
+        return dbt;
+    }
+
+    public Noeud getFin() {
+        return fin;
+    }
+    
+    //TODO : set
+    
 }
