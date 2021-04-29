@@ -295,8 +295,33 @@ public class Treilli {
             rep = Lire.i();
             if (rep == 1) {
                 //Nouveau Menu
-                System.out.println("1) Determiner la zone de construction");
-                System.out.println(this);
+                int x = -1;
+                while (x!=0) {
+                    System.out.println(this);
+                    System.out.println("1) Determiner la zone de construction");
+                    System.out.println("2)Afficher zone de construction");
+                    System.out.println("3)Ajouter un Triangle");
+                    System.out.println("4)Afficher le terrain");
+                
+                    if(x == 1){
+
+                    }
+                    else if(x == 2){
+                        System.out.println("maxX = " + this.maxX() + " ; " +
+                            "minX = " + this.minX() + "\n" +
+                            "maxY = " + this.maxY() + " ; " +
+                            "minY = " + this.minY() + "\n");
+                    }
+                    else if(x == 3){
+
+                    }
+                    else if(x == 4){
+
+                    }
+                }          
+                
+            
+            
             } else if (rep == 2) {
                 //Nouveau Menu
                 System.out.println("")
