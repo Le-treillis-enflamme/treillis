@@ -282,20 +282,24 @@ public class Treilli {
     public void menuTexte() {
         int rep = -1;
         while (rep != 0) {
-            System.out.println("1) afficher le treilli");
-            System.out.println("2) ajouter un noeud");
-            System.out.println("3) ajouter une barre avec deux nouveaux noeuds");
-            System.out.println("4) ajouter une barre sur deux noeuds existants");
+            System.out.println("1) Creer un nouveau terrain");
+            System.out.println("2) Creer un nouveau treilli");
+            System.out.println("3) Faire une étude d'un treilli");
+            /*System.out.println("4) ajouter une barre sur deux noeuds existants");
             System.out.println("5) créer un sous-groupe");
             System.out.println("6) afficher la zone de construction");
             System.out.println("7) calculer la distance à un point");
             System.out.println("8) retirer des figures du groupe");
             System.out.println("0) quitter");
-            System.out.println("votre choix : ");
+            System.out.println("votre choix : ");*/
             rep = Lire.i();
             if (rep == 1) {
+                //Nouveau Menu
+                System.out.println("1) Determiner la zone de construction");
                 System.out.println(this);
             } else if (rep == 2) {
+                //Nouveau Menu
+                System.out.println("")
                 Point np = Point.demandePoint();
                 this.add(np);
             } else if (rep == 3) {
