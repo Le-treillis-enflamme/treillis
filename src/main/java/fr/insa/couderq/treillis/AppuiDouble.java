@@ -10,10 +10,13 @@ package fr.insa.couderq.treillis;
  * @author Administrateur
  */
 public class AppuiDouble extends Appuis {
-
-    public AppuiDouble(double a, Segment sgt) {
-        super(a, sgt);
-    }
     
+    private double Rx;
+    private double Ry;
+    
+public AppuiDouble(double a, Segment sgt) {
+    super(a, sgt);
+    
+    }
     
 }
