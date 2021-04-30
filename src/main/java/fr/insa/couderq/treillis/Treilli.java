@@ -5,7 +5,6 @@
  */
 package fr.insa.couderq.treillis;
 
-import static fr.insa.couderq.treillis.Noeud.nextID;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +62,7 @@ public class Treilli {
 
     //TODO 
     //fonction qui calcule le cout total du treillis
+    
     ///NOEUD///
     public void add(Noeud n) {
         if (! noeuds.contains(n)) {
@@ -79,18 +79,18 @@ public class Treilli {
         this.noeuds.remove(n);
     }
     
-    public void removeAllN(List<Noeud> ln) {
+    public void removeAllNoeuds(List<Noeud> ln) {
         for(Noeud n : ln) {
             this.remove(n);
         }
     }
     // on comprend pas trop la différence
-    public void clearN() {
+    public void clearNoeuds() {
         List<Noeud> toRemove = new ArrayList<>(this.noeuds);
-        this.removeAllN(toRemove);
+        this.removeAllNoeuds(toRemove);
     }
 
-    public int sizeN() {
+    public int sizeNoeuds() {
         return this.noeuds.size();
     }
     
@@ -110,21 +110,52 @@ public class Treilli {
         this.barres.remove(b);
     }
     
-    public void removeAllB(List<Barre> lb) {
+    public void removeAllBarres(List<Barre> lb) {
         for(Barre b : lb) {
             this.remove(b);
         }
     }
     // on comprend pas trop la différence
-    public void clearB() {
+    public void clearBarres() {
         List<Barre> toRemove = new ArrayList<>(this.barres);
-        this.removeAllB(toRemove);
+        this.removeAllBarres(toRemove);
     }
 
-    public int sizeB() {
+    public int sizeBarres() {
         return this.barres.size();
     }
     
+    
+    ///TERRAIN///
+    public void add(Triangle t) {
+        if (! terrain.contains(t)) {
+            this.terrain.add(t);
+        }else {
+            System.out.println("Triangle deja dans terrain");
+        }
+    }
+    
+    public void remove(Triangle t) {
+        if (! terrain.contains(t)) {
+            System.out.println("Triangle pas dans le terrain");
+        }
+        this.terrain.remove(t);
+    }
+    
+    public void removeAllTerrain(List<Triangle> lt) {
+        for(Triangle t : lt) {
+            this.remove(t);
+        }
+    }
+    // on comprend pas trop la différence
+    public void clearTerrain() {
+        List<Triangle> toRemove = new ArrayList<>(this.terrain);
+        this.removeAllTerrain(toRemove);
+    }
+
+    public int sizeTerrain() {
+        return this.terrain.size();
+    }
     
     /**
      * retourne la figure contenue dans le groupe la plus proche du point et 
@@ -177,7 +208,7 @@ public class Treilli {
         return res + "}";
     }
 
-    public static Groupe groupeTest() {
+    /*public static Groupe groupeTest() {
         Point p1 = new Point(10,10);
         Point p2 = new Point(100, 10);
         Point p3 = new Point(100, 100);
@@ -196,7 +227,7 @@ public class Treilli {
         res.add(s4);
         res.add(triangle);
         return res;
-    }
+    }*/
 
     public Noeud choisiNoeud() {
         List<Noeud> ln = new ArrayList<>();
@@ -255,6 +286,64 @@ public class Treilli {
             }
         }
     }
+    
+    public Triangle choisiTriangleDsTerrain() {
+        List<Triangle> lt = new ArrayList<>();
+        System.out.println("Liste des triangles disponibles dans le terrain: ");
+        int nbr = 0;
+        for (int i = 0; i < this.terrain.size(); i++) {
+            Triangle t = this.terrain.get(i);
+            if (t instanceof Triangle) {
+                nbr++;
+                lt.add((Triangle) t);
+                System.out.println(nbr + ") " + t);
+            }
+        }
+        if (nbr == 0) {
+            System.out.println("Aucun triangle disponible");
+            return null;
+        } else {
+            int rep = -1;
+            while (rep < 0 || rep > nbr) {
+                System.out.println("votre choix (0 pour annuler) : ");
+                rep = Lire.i();
+            }
+            if (rep == 0) {
+                return null;
+            } else {
+                return lt.get(rep - 1);
+            }
+        }
+    }
+    
+    public Type choisiType() {
+        List<Type> lt = new ArrayList<>();
+        System.out.println("liste des types disponibles : ");
+        int nbr = 0;
+        for (int i = 0; i < this.catalogue.size(); i++) {
+            Type t = this.catalogue.get(i);
+            if (t instanceof Type) {
+                nbr++;
+                lt.add((Type) t);
+                System.out.println(nbr + ") " + t);
+            }
+        }
+        if (nbr == 0) {
+            System.out.println("Aucun type disponible");
+            return null;
+        } else {
+            int rep = -1;
+            while (rep < 0 || rep > nbr) {
+                System.out.println("votre choix (0 pour annuler) : ");
+                rep = Lire.i();
+            }
+            if (rep == 0) {
+                return null;
+            } else {
+                return lt.get(rep - 1);
+            }
+        }
+    }
 
     /*public List<Figure> choisiFigures() {
         List<Figure> res = new ArrayList<>();
@@ -279,82 +368,101 @@ public class Treilli {
         return res;
     }*/
 
-    public void menuTexte() {
+    public static void menuTexte() {
+        
+        System.out.println("Donnez les coordonnées xmin, xmax, ymin, ymax de la zone de construction");
+        double xmin = Lire.d();
+        double xmax = Lire.d();
+        double ymin = Lire.d();
+        double ymax = Lire.d();
+        Treilli treilli = new Treilli (xmin, xmax, ymin, ymax);                    // ?? est-ce qu'on utilise this, est-ce qu'on en fait une méthode
+        System.out.println("xmax = " +this.xmax+ " ; " + "xmin = " + this.xmin + "\n" +"ymax = " + this.ymax + " ; " +"ymin = " + this.ymin + "\n");
+
+
         int rep = -1;
         while (rep != 0) {
-            System.out.println("1) Creer un nouveau terrain");
-            System.out.println("2) Creer un nouveau treilli");
-            System.out.println("3) Faire une étude d'un treilli");
-            /*System.out.println("4) ajouter une barre sur deux noeuds existants");
-            System.out.println("5) créer un sous-groupe");
-            System.out.println("6) afficher la zone de construction");
-            System.out.println("7) calculer la distance à un point");
-            System.out.println("8) retirer des figures du groupe");
-            System.out.println("0) quitter");
-            System.out.println("votre choix : ");*/
+            System.out.println("Definition du terrain : ");
+            System.out.println("1)Ajouter un triangle");
+            System.out.println("2)Supprimer un triangle");
+            System.out.println("3)Supprimer tout");
             rep = Lire.i();
-            if (rep == 1) {
-                //Nouveau Menu
-                int x = -1;
-                while (x!=0) {
-                    System.out.println(this);
-                    System.out.println("1) Determiner la zone de construction");
-                    System.out.println("2)Afficher zone de construction");
-                    System.out.println("3)Ajouter un Triangle");
-                    System.out.println("4)Afficher le terrain");
-                
-                    if(x == 1){
 
-                    }
-                    else if(x == 2){
-                        System.out.println("maxX = " + this.maxX() + " ; " +
-                            "minX = " + this.minX() + "\n" +
-                            "maxY = " + this.maxY() + " ; " +
-                            "minY = " + this.minY() + "\n");
-                    }
-                    else if(x == 3){
+            if (rep==1){
+                double px, py;
+                System.out.println("Donnez les positions des sommets du triangle");
+                System.out.println("Sommet A : ");
+                px = Lire.d();
+                py = Lire.d();
+                Point A = new Point (px, py);
 
-                    }
-                    else if(x == 4){
+                System.out.println("Sommet B : ");
+                px = Lire.d();
+                py = Lire.d();
+                Point B = new Point (px, py);
 
-                    }
-                }          
-                
-            
-            
-            } else if (rep == 2) {
-                //Nouveau Menu
-                System.out.println("")
-                Point np = Point.demandePoint();
-                this.add(np);
-            } else if (rep == 3) {
-                Segment ns = Segment.demandeSegment();
-                this.add(ns);
-            } else if (rep == 4) {
-                System.out.println("choisissez le début du segment");
-                Point deb = this.choisiPoint();
-                if (deb != null) {
-                    System.out.println("choisissez la fin du segment");
-                    Point fin = this.choisiPoint();
-                    Segment ns = new Segment(deb, fin);
-                    this.add(ns);
-                }
-            } else if (rep == 5) {
-                List<Figure> select = this.choisiFigures();
-                this.sousGroupe(select);
-            } else if (rep == 6) {
-                System.out.println("maxX = " + this.maxX() + " ; " +
-                        "minX = " + this.minX() + "\n" +
-                        "maxY = " + this.maxY() + " ; " +
-                        "minY = " + this.minY() + "\n");
-            } else if (rep == 7) {
-                System.out.println("entrez un point :");
-                Point p = Point.demandePoint();
-                System.out.println("distance : "+this.distancePoint(p));
-            } else if (rep == 8) {
-                List<Figure> select = this.choisiFigures();
-                this.removeAll(select);
+                System.out.println("Sommet C : ");
+                px = Lire.d();
+                py = Lire.d();
+                Point C = new Point (px, py);
+
+                Triangle ABC = new Triangle (A,B,C);
+                add(ABC);
+            }else if(rep==2){
+
+                Triangle sup = treilli.choisiTriangleDsTerrain();                                    // ?? est-ce qu'on utilise this, méthode ?
+                treilli.remove(sup);
             }
+            else if(rep==3){
+                treilli.clearTerrain();
+            }    
+        }
+
+
+        System.out.println("Construction Treilli");
+        int rep2 = -1;
+        while (rep2 != 0) {
+        System.out.println("1)Creer un noeud simple");
+        System.out.println("2)Creer un appuis encastre");
+        System.out.println("3)Creer un appuis double");
+        System.out.println("4)Creer un appuis simple");
+        System.out.println("5)Creer une barre");
+        System.out.println("7)Modifier type de barre");
+        System.out.println("8)Supprimer un noeud");
+        System.out.println("9)Supprimer une barre");
+        rep2 =Lire.i();
+
+        if (rep2==1){
+            System.out.println("Donnez px, py");
+            double px = Lire.d();
+            double py = Lire.d();
+            NoeudSimple N = new NoeudSimple(px,py);
+            add(N);
+        }else if(rep2==2){         
+
+        }else if(rep2==3){
+
+        }else if(rep2==4){
+
+        }else if(rep2==5){
+            System.out.println("Choisissez noeud de début, noeud de fin, type de barre");   //TODO
+            Noeud dbt = treilli.choisiNoeud();
+            Noeud fin = treilli.choisiNoeud();
+            
+        }else if(rep2==7){
+            Barre b = treilli.choisiBarre();
+            Type type = treilli.choisiType();
+            b.setType(type);
+        }
+        else if(rep2==8){
+            Noeud n = treilli.choisiNoeud();
+            treilli.remove(n);
+            treilli.removeAllBarres(n.barres);
+        }
+        else if(rep2==9){
+            Barre b = treilli.choisiBarre();
+            treilli.remove(b);
+        }
+
         }
     }
 
@@ -473,5 +581,6 @@ public class Treilli {
     }
 
 }
+
 
 
