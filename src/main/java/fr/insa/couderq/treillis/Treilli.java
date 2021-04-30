@@ -481,6 +481,12 @@ public class Treilli {
         }
             
         }
+        
+        
+    public Matrice Calcul () {
+        Matrice Res = new Matrice (2* this.sizeNoeuds(),2* this.sizeNoeuds()+1 );
+        
+    }
 
     public static void test1() {
         System.out.println("groupe test : \n" + Groupe.groupeTest());
