@@ -422,7 +422,6 @@ public class Treilli {
         int rep2 = -1;
         while (rep2 != 0) {
         System.out.println("1)Creer un noeud simple");
-        System.out.println("2)Creer un appuis encastre");
         System.out.println("3)Creer un appuis double");
         System.out.println("4)Creer un appuis simple");
         System.out.println("5)Creer une barre");
@@ -437,11 +436,12 @@ public class Treilli {
             double py = Lire.d();
             NoeudSimple N = new NoeudSimple(px,py);
             add(N);
-        }else if(rep2==2){         
-
         }else if(rep2==3){
+            //TODO list
+        }
 
         }else if(rep2==4){
+                //TODO list
 
         }else if(rep2==5){
             System.out.println("Choisissez noeud de début, noeud de fin, type de barre");   //TODO
@@ -464,7 +464,23 @@ public class Treilli {
         }
 
         }
-    }
+        
+        System.out.println("Etude du treilli");
+        int rep3 = -1;
+        
+        while (rep3 != 0) {
+            rep3 = Lire.i();
+    
+           //isostatique 2.ns = nb + nsas + 2.nsad
+            if (2*treilli.sizeNoeuds()== treilli.sizeBarres()+ treilli.sizeAppuisSimples() + 2*treilli.sizeAppuisDoubles()){
+            //calcul force de compression traction et réaction
+            //comparer type
+            //afficher les barres rouge + commentaire
+            //retour au treilli
+            //sauvegarder
+        }
+            
+        }
 
     public static void test1() {
         System.out.println("groupe test : \n" + Groupe.groupeTest());
