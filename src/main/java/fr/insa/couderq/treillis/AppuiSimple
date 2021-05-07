@@ -3,10 +3,7 @@ package fr.insa.couderq.treillis;
 import java.io.IOException;
 import java.io.Writer;
 import javafx.scene.paint.Color;
-/**
- *
- * @author constantincouzinet
- */
+
 public class AppuiSimple extends Appuis{
     private double R;
 
