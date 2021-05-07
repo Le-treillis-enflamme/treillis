@@ -5,6 +5,8 @@
  */
 package fr.insa.couderq.treillis;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Administrateur
@@ -14,13 +16,33 @@ public abstract class Appuis extends Noeud {
     private Segment sgt;
     private double a;
     
-    public Appuis(double a, Segment sgt) {
+    public Appuis(Treilli treilli, double a, Segment sgt, Color couleur) {
+        super(treilli, couleur);
         if ((a<0)||(a>1)){
             throw new Error ("(a<0)||(a>1)");
         }
         this.sgt = sgt;
         this.a = a;
     }
+    
+    public Appuis(Treilli treilli, double a, Segment sgt) {
+        super(treilli, Color.BLACK);
+        if ((a<0)||(a>1)){
+            throw new Error ("(a<0)||(a>1)");
+        }
+        this.sgt = sgt;
+        this.a = a;
+        
+    }
+
+    public Segment getSgt() {
+        return sgt;
+    }
+
+    public double getA() {
+        return a;
+    }
+    
 
     @Override
     public double calPx() {
@@ -33,4 +55,5 @@ public abstract class Appuis extends Noeud {
         double py = this.a*this.sgt.getDbt().getPy() + (1-this.a)*this.sgt.getFin().getPy();
         return py;
     }
+    
 }
