@@ -11,4 +11,15 @@ package fr.insa.couderq.treillis;
  */
 public class Type {
     //TODO
+    
+    private double cout;
+    private String matiere;
+    private double Fmax;
+    
+    
+    public Type(){
+       
+    }
+    
+    
 }

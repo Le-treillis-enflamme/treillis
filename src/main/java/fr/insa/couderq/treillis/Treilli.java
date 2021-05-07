@@ -5,8 +5,14 @@
  */
 package fr.insa.couderq.treillis;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
@@ -15,9 +21,15 @@ import java.util.List;
 public class Treilli {
     
     private List<Noeud> noeuds;
+    private List<NoeudSimple> noeudsS;
     private List<Barre> barres;
     private List<Type> catalogue;
     private List<Triangle> terrain;
+    private List<Segment> segments;
+    private List<AppuiSimple> appuisS;
+    private List<AppuiDouble> appuisD;
+    private List<Figure> figures;
+    private List<Point> points;
     private double xmin;
     private double xmax;
     private double ymin;
@@ -35,15 +47,74 @@ public class Treilli {
     public Treilli(double xmin, double xmax, double ymin, double ymax) {
         this.id = nextID();
         this.noeuds = new ArrayList<Noeud>();
+        this.noeudsS = new ArrayList<NoeudSimple>();
         this.barres = new ArrayList<Barre>();
         this.catalogue = new ArrayList<Type>();
         this.terrain = new ArrayList<Triangle>();
+        this.segments = new ArrayList<Segment>();
+        this.appuisS = new ArrayList<AppuiSimple>();
+        this.appuisD = new ArrayList<AppuiDouble>();
+        this.figures = new ArrayList<Figure>();
+        this.points = new ArrayList<Point>();
+        
+        /* pas utile puisqu'à chaque fois qu'on crée une figure, la figure est ajoutée à la liste figures (constructeur Figure)
+        for(int i =0;i<this.noeuds.size();i++){
+            this.figures.add(this.noeuds.get(i));
+        }
+        for(int i =0;i<this.barres.size();i++){
+            this.figures.add(this.barres.get(i));
+        }
+        for(int i =0;i<this.terrain.size();i++){
+            this.figures.add(this.terrain.get(i));
+        }
+        for(int i =0;i<this.appuisS.size();i++){
+            this.figures.add(this.appuisS.get(i));
+        }
+        for(int i =0;i<this.appuisD.size();i++){
+            this.figures.add(this.appuisD.get(i));
+        }
+        for(int i =0;i<this.noeudsS.size();i++){
+            this.figures.add(this.noeudsS.get(i));
+        }
+        for(int i =0;i<this.noeudsS.size();i++){
+            this.figures.add(this.noeudsS.get(i));
+        }
+        for(int i =0;i<this.noeudsS.size();i++){
+            this.figures.add(this.noeudsS.get(i));
+        }
+        */ 
+        
         this.xmin = xmin;
         this.xmax = xmax;
         this.ymin = ymin;
         this.ymax = ymax;
     }
+    public Treilli() { //valeurs par défaut
+        this(800,800,800,800);
+    }
+    public Treilli(double xmin, double xmax, double ymin, double ymax, int id) {
+        this.id = id;
+        this.noeuds = new ArrayList<Noeud>();
+        this.noeudsS = new ArrayList<NoeudSimple>();
+        this.barres = new ArrayList<Barre>();
+        this.catalogue = new ArrayList<Type>();
+        this.terrain = new ArrayList<Triangle>();
+        this.segments = new ArrayList<Segment>();
+        this.appuisS = new ArrayList<AppuiSimple>();
+        this.appuisD = new ArrayList<AppuiDouble>();
+        this.figures = new ArrayList<Figure>();
+        this.points = new ArrayList<Point>();
+        this.xmin = xmin;
+        this.xmax = xmax;
+        this.ymin = ymin;
+        this.ymax = ymax;
+    }
+    
 
+    public int getId() {
+        return id;
+    }
+    
     public double getXmin() {
         return xmin;
     }
@@ -59,9 +130,60 @@ public class Treilli {
     public double getYmax() {
         return ymax;
     }
+    
+    public List<Triangle> getTerrain(){
+        return terrain;
+    }
 
+    public void setBarres(Barre b) {
+        this.barres.add(b);
+    }
+
+    public List<Figure> getFigures() {
+        return figures;
+    }
+    
+    public void setFigures(Figure f) {
+        this.figures.add(f);
+    }
+    
+    public void setNoeuds(Noeud n) {
+        this.noeuds.add(n);
+    }
+    
+    public void setNoeudsS(NoeudSimple ns) {
+        this.noeudsS.add(ns);
+    }
+    
+    public void setAppuisS(AppuiSimple as) {
+        this.appuisS.add(as);
+    }
+    
+    public void setAppuisD(AppuiDouble ad) {
+        this.appuisD.add(ad);
+    }
+    
+    public void setPoints(Point p) {
+        this.points.add(p);
+    }
+    
+    public void setSegments(Segment s) {
+        this.segments.add(s);
+    }
+    
+    public void setTerrain(Triangle t) {
+        this.terrain.add(t);
+    }
     //TODO 
     //fonction qui calcule le cout total du treillis
+    //Figure
+    public void add(Figure f) {
+        if (! figures.contains(f)) {
+            this.figures.add(f);
+        }else {
+            System.out.println("Noeud deja dans treilli");
+        }
+    }
     
     ///NOEUD///
     public void add(Noeud n) {
@@ -93,6 +215,30 @@ public class Treilli {
     public int sizeNoeuds() {
         return this.noeuds.size();
     }
+    // Noeud Simple
+    public void add(NoeudSimple ns) {
+        if (! noeudsS.contains(ns)) {
+            this.noeudsS.add(ns);
+        }else {
+            System.out.println("Noeud Simple deja dans treilli");
+        }
+    }
+    //Appui Simple
+    public void add(AppuiSimple as) {
+        if (! appuisS.contains(as)) {
+            this.appuisS.add(as);
+        }else {
+            System.out.println("Appui Simple deja dans treilli");
+        }
+    }
+    //Appui Double
+    public void add(AppuiDouble ad) {
+        if (! appuisD.contains(ad)) {
+            this.appuisD.add(ad);
+        }else {
+            System.out.println("Appui Double deja dans treilli");
+        }
+    }
     
     ///BARRE///
     public void add(Barre b) {
@@ -115,6 +261,8 @@ public class Treilli {
             this.remove(b);
         }
     }
+    
+    
     // on comprend pas trop la différence
     public void clearBarres() {
         List<Barre> toRemove = new ArrayList<>(this.barres);
@@ -147,6 +295,77 @@ public class Treilli {
             this.remove(t);
         }
     }
+    //Segment 
+    
+    public void remove(Segment s) {
+        if (! segments.contains(s)) {
+            System.out.println("Segment pas dans le terrain");
+        }
+        this.removeAllTerrain(s.getTriangles()); 
+        this.segments.remove(s);
+    }
+    
+    public void removeAllSegments(List<Segment> ls) {
+        for(Segment s : ls) {
+            this.remove(s);
+        }
+    }
+    
+    public void add(Segment s) {
+        if (! segments.contains(s)) {
+            this.segments.add(s);
+        }else {
+            System.out.println("Segment deja dans treilli");
+        }
+    }
+    
+    //Point
+    public void add(Point p) {
+        if (! points.contains(p)) {
+            this.points.add(p);
+        }else {
+            System.out.println("point deja dans treilli");
+        }
+    }
+    
+    //Figure
+    public void remove(Figure f) {
+        if (! figures.contains(f)) {
+            System.out.println("figure pas dans le treilli");
+        }
+        this.figures.remove(f);
+        if(f instanceof AppuiDouble){
+            this.appuisD.remove(f);
+        }
+        if(f instanceof AppuiSimple){
+            this.appuisS.remove(f);
+        }
+        if(f instanceof Barre){
+            this.barres.remove(f);
+        }
+        if(f instanceof Noeud){
+            this.noeuds.remove(f);
+        }
+        if(f instanceof NoeudSimple){
+            this.noeudsS.remove(f);
+        }
+        if(f instanceof Point){
+            this.points.remove(f);
+        }
+        if(f instanceof Segment){
+            this.segments.remove(f);
+        }
+        if(f instanceof Triangle){
+            this.terrain.remove(f);
+        }
+    }
+    
+    public void removeAllFigures(List<Figure> lf) {
+        for(Figure f : lf) {
+            this.remove(f);
+        }
+    }
+    
     // on comprend pas trop la différence
     public void clearTerrain() {
         List<Triangle> toRemove = new ArrayList<>(this.terrain);
@@ -157,20 +376,29 @@ public class Treilli {
         return this.terrain.size();
     }
     
+    public int sizeAppuisS() {
+        return this.appuisS.size();
+    }
+    public int sizeAppuisD() {
+        return this.appuisD.size();
+    }
+    
     /**
      * retourne la figure contenue dans le groupe la plus proche du point et 
      * au maximum à distMax du point;
      * retourne null si aucune figure n'est à une distance plus faible que
      * distMax;
      */
-    /*public Figure plusProche(Point p,double distMax) {
-        if (this.contient.isEmpty()) {
+    public Figure plusProche(Point p,double distMax) {
+        //if (this.noeuds.isEmpty() && this.barres.isEmpty() && this.terrain.isEmpty()) {
+           //return null;
+        if (this.figures.isEmpty()){
             return null;
         } else {
-            Figure fmin = this.contient.get(0); 
+            Figure fmin = (Figure)this.figures.get(0); 
             double min = fmin.distancePoint(p);
-            for(int i = 1 ; i < this.contient.size() ; i ++) {
-                Figure fcur = this.contient.get(i);
+            for(int i = 1 ; i < this.figures.size() ; i ++) {
+                Figure fcur = this.figures.get(i);
                 double cur = fcur.distancePoint(p);
                 if (cur < min) {
                     min = cur;
@@ -183,7 +411,7 @@ public class Treilli {
                 return null;
             }
         }
-    }*/
+    }
 
 //cpd pas
     public static String indente(String toIndente, String prefix) {
@@ -376,7 +604,7 @@ public class Treilli {
         double ymin = Lire.d();
         double ymax = Lire.d();
         Treilli treilli = new Treilli (xmin, xmax, ymin, ymax);                    // ?? est-ce qu'on utilise this, est-ce qu'on en fait une méthode
-        System.out.println("xmax = " +this.xmax+ " ; " + "xmin = " + this.xmin + "\n" +"ymax = " + this.ymax + " ; " +"ymin = " + this.ymin + "\n");
+        System.out.println("xmax = " +treilli.xmax+ " ; " + "xmin = " + treilli.xmin + "\n" +"ymax = " + treilli.ymax + " ; " +"ymin = " + treilli.ymin + "\n");
 
 
         int rep = -1;
@@ -393,20 +621,20 @@ public class Treilli {
                 System.out.println("Sommet A : ");
                 px = Lire.d();
                 py = Lire.d();
-                Point A = new Point (px, py);
+                Point A = new Point (treilli,px, py);
 
                 System.out.println("Sommet B : ");
                 px = Lire.d();
                 py = Lire.d();
-                Point B = new Point (px, py);
+                Point B = new Point (treilli,px, py);
 
                 System.out.println("Sommet C : ");
                 px = Lire.d();
                 py = Lire.d();
-                Point C = new Point (px, py);
+                Point C = new Point (treilli,px, py);
 
-                Triangle ABC = new Triangle (A,B,C);
-                add(ABC);
+                Triangle ABC = new Triangle (treilli,A,B,C);
+                treilli.add(ABC);
             }else if(rep==2){
 
                 Triangle sup = treilli.choisiTriangleDsTerrain();                                    // ?? est-ce qu'on utilise this, méthode ?
@@ -434,11 +662,10 @@ public class Treilli {
             System.out.println("Donnez px, py");
             double px = Lire.d();
             double py = Lire.d();
-            NoeudSimple N = new NoeudSimple(px,py);
-            add(N);
+            NoeudSimple N = new NoeudSimple(treilli,px,py);
+            treilli.add(N);
         }else if(rep2==3){
             //TODO list
-        }
 
         }else if(rep2==4){
                 //TODO list
@@ -456,7 +683,7 @@ public class Treilli {
         else if(rep2==8){
             Noeud n = treilli.choisiNoeud();
             treilli.remove(n);
-            treilli.removeAllBarres(n.barres);
+            treilli.removeAllBarres(n.getBarres());
         }
         else if(rep2==9){
             Barre b = treilli.choisiBarre();
@@ -472,133 +699,40 @@ public class Treilli {
             rep3 = Lire.i();
     
            //isostatique 2.ns = nb + nsas + 2.nsad
-            if (2*treilli.sizeNoeuds()== treilli.sizeBarres()+ treilli.sizeAppuisSimples() + 2*treilli.sizeAppuisDoubles()){
+            if (2*treilli.sizeNoeuds()== treilli.sizeBarres()+ treilli.sizeAppuisS() + 2*treilli.sizeAppuisD()){
             //calcul force de compression traction et réaction
             //comparer type
             //afficher les barres rouge + commentaire
             //retour au treilli
             //sauvegarder
-        }
+            }
             
         }
-        
-        
+    }   
+    /*   
     public Matrice Calcul () {
         Matrice Res = new Matrice (2* this.sizeNoeuds(),2* this.sizeNoeuds()+1 );
-        
+        return Res;
     }
+    */
 
-    public static void test1() {
-        System.out.println("groupe test : \n" + Groupe.groupeTest());
-    }
-
-    public static void testMenu() {
-        Groupe g = groupeTest();
-        g.menuTexte();
-    }
-
-    public static void main(String[] args) {
-//        test1();
-        testMenu();
-    }
-
-    /**
-     * abscice maximale d'un groupe de figures. 0 si le groupe est vide.
-     */
-    @Override
-    public double maxX() {
-        if (this.contient.isEmpty()) {
-            return 0;
-        } else {
-            double max = this.contient.get(0).maxX();
-            for (int i = 1; i < this.contient.size(); i++) {
-                double cur = this.contient.get(i).maxX();
-                if (cur > max) {
-                    max = cur;
-                }
-            }
-            return max;
-        }
-    }
-
-    /**
-     * abscice minimale d'un groupe de figures. 0 si le groupe est vide.
-     */
-    @Override
-    public double minX() {
-        if (this.contient.isEmpty()) {
-            return 0;
-        } else {
-            double min = this.contient.get(0).minX();
-            for (int i = 1; i < this.contient.size(); i++) {
-                double cur = this.contient.get(i).minX();
-                if (cur < min) {
-                    min = cur;
-                }
-            }
-            return min;
-        }
-    }
-
-    /**
-     * ordonnee maximale d'un groupe de figures. 0 si le groupe est vide.
-     */
-    @Override
-    public double maxY() {
-        if (this.contient.isEmpty()) {
-            return 0;
-        } else {
-            double max = this.contient.get(0).maxY();
-            for (int i = 1; i < this.contient.size(); i++) {
-                double cur = this.contient.get(i).maxY();
-                if (cur > max) {
-                    max = cur;
-                }
-            }
-            return max;
-        }
-    }
-
-    /**
-     * ordonnee minimale d'un groupe de figures. 0 si le groupe est vide.
-     */
-    @Override
-    public double minY() {
-        if (this.contient.isEmpty()) {
-            return 0;
-        } else {
-            double min = this.contient.get(0).minY();
-            for (int i = 1; i < this.contient.size(); i++) {
-                double cur = this.contient.get(i).minY();
-                if (cur < min) {
-                    min = cur;
-                }
-            }
-            return min;
-        }
-    }
-
-    @Override
-    public double distancePoint(Point p) {
-        if (this.contient.isEmpty()) {
-            return new Point(0,0).distancePoint(p);
-        } else {
-            double dist = this.contient.get(0).distancePoint(p);
-            for (int i = 1; i < this.contient.size(); i++) {
-                double cur = this.contient.get(i).distancePoint(p);
-                if (cur < dist) {
-                    dist = cur;
-                }
-            }
-            return dist;
-        }
-
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        for(Figure f : this.contient) {
+    /*
+    public void draw ( GraphicsContext gc) { //méthode remplacée par dessine
+        for(Figure f : this.figures) { 
             f.draw(gc);
+        }
+        
+    }*/
+
+    public void save(Writer w, Numeroteur<Figure> num) throws IOException {
+            w.append("Treilli;" + id+";"+xmin+";"+xmax+";"+ymin+";"+ymax);
+            w.append("\n");
+    }
+    
+    public void sauvegarde(File fout) throws IOException {
+        Numeroteur<Figure> num = new Numeroteur<Figure>();
+        try (BufferedWriter bout = new BufferedWriter(new FileWriter(fout))) {
+            this.save(bout, num);
         }
     }
 
