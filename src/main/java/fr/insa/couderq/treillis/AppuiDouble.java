@@ -39,4 +39,3 @@ public class AppuiDouble extends Appuis {
     
 }
 
-
